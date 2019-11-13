@@ -4,6 +4,8 @@
   "description": "Small project to do in my free time",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
+    "start": "webpack --watch & live-server --port=8085",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,5 +13,13 @@
     "url": "https://github.com/wiencko/games/firstgame"
   },
   "author": "Anthony Wiencko",
-  "license": "ISC"
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "phaser": "^3.20.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
 }
