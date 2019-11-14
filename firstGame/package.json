@@ -15,6 +15,7 @@
   "author": "Anthony Wiencko",
   "license": "MIT",
   "devDependencies": {
+    "@types/activex-excel": "^14.0.5",
     "live-server": "^1.2.1",
     "phaser": "^3.20.1",
     "ts-loader": "^6.2.1",

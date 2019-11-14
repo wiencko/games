@@ -9,7 +9,10 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
-  },
+	},
+	devServer: {
+		//hot: false
+	},
   resolve: {
     extensions: [ '.ts', '.tsx', '.js' ]
   },
