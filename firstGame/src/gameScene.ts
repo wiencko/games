@@ -4,6 +4,7 @@ export class GameScene extends Phaser.Scene {
 	lastStarTime: number;
 	starsCaught: number;
 	starsFallen: number;
+	fallenLimit: number;
 	sand: Phaser.Physics.Arcade.StaticGroup;
 	info: Phaser.GameObjects.Text;
 	constructor() {
@@ -16,7 +17,9 @@ export class GameScene extends Phaser.Scene {
 		this.lastStarTime = 0;
 		this.starsCaught = 0;
 		this.starsFallen = 0;
+		this.fallenLimit = 100;
 	}
+
 	preload(): void {
 		this.load.setBaseURL(
 			"https://raw.githubusercontent.com/mariyadavydova/" +
@@ -24,11 +27,13 @@ export class GameScene extends Phaser.Scene {
 		this.load.image("star", "assets/star.png");
 		this.load.image("sand", "assets/sand.jpg");
 	}
+	hi: Phaser.Types.GameObjects.Group.GroupCreateConfig;
 	create(): void {
 		this.sand = this.physics.add.staticGroup({
 			key: 'sand',
 			frameQuantity: 20
 		});
+		
 		Phaser.Actions.PlaceOnLine(this.sand.getChildren(),
 			new Phaser.Geom.Line(20, 580, 820, 580));
 		this.sand.refresh();
@@ -39,6 +44,7 @@ export class GameScene extends Phaser.Scene {
 		var diff: number = time - this.lastStarTime;
 		if (diff > this.delta) {
 			this.lastStarTime = time;
+			this.delta = 300;
 			if (this.delta > 500) {
 				this.delta -= 20;
 			}
@@ -46,7 +52,7 @@ export class GameScene extends Phaser.Scene {
 		}
 		this.info.text =
 			this.starsCaught + " caught - " +
-			this.starsFallen + " fallen (max 3)";
+			this.starsFallen + " fallen (max "+ this.fallenLimit +")";
 	}
 	private onClick(star: Phaser.Physics.Arcade.Image): () => void {
 		return function () {
@@ -60,19 +66,18 @@ export class GameScene extends Phaser.Scene {
 	}
 	private onFall(star: Phaser.Physics.Arcade.Image): () => void {
 		return function () {
-			//star.active = false;
-			star.removeListener("pointerdown");
+			if(star.active){
+			star.active = false;
 			star.setTint(0xff0000);
 			this.starsFallen += 1;
-			//star.setAcceleration(0,0);
-			//star.destroy();
-			this.time.delayedCall(100, function (star) {
+			this.time.delayedCall(100, function (star: Phaser.Physics.Arcade.Image) {
 				star.destroy();
-				if (this.starsFallen > 100) {
+				if (this.starsFallen > this.fallenLimit) {
 					this.scene.start("ScoreScene",
 						{ starsCaught: this.starsCaught });
 				}
 			}, [star], this);
+		}
 		}
 	}
 	private emitStar(): void {
@@ -82,9 +87,9 @@ export class GameScene extends Phaser.Scene {
 		star = this.physics.add.image(x, y, "star");
 		star.setDisplaySize(50, 50);
 		star.setVelocity(0, 200);
-		star.setAcceleration(0, 20);
+		star.setAcceleration(0, 100);
 		star.setInteractive();
-		star.on('pointerdown', this.onClick(star), this);
+		star.on('pointerover', this.onClick(star), this);
 		this.physics.add.collider(star, this.sand,
 			this.onFall(star), undefined, this);
 	}
