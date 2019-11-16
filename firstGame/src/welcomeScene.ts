@@ -8,12 +8,13 @@ constructor() {
     });
   }
 create(): void {
+	var canvas = this.sys.game.canvas;
     var titleText: string = "Starfall";
-    this.title = this.add.text(150, 200, titleText,
-      { font: '128px Arial Bold', fill: '#FBFBAC' });
+    this.title = this.add.text((canvas.width/2) -250, 200, titleText,
+      { font: '128px Arial Bold', fill: '#D3D3D3' });
 var hintText: string = "Click to start";
-    this.hint = this.add.text(300, 350, hintText,
-      { font: '24px Arial Bold', fill: '#FBFBAC' });
+    this.hint = this.add.text((canvas.width/2) - 110, 350, hintText,
+      { font: '24px Arial Bold', fill: '#D3D3D3' });
 this.input.on('pointerdown', function (/*pointer*/) {
       this.scene.start("GameScene");
     }, this);

@@ -6,9 +6,10 @@ import { WelcomeScene } from "./welcomeScene";
 
 const config: Phaser.Types.Core.GameConfig = {
 	title: "Starfall",
-	width: 800,
-	height: 600,
+	width: window.innerWidth,
+	height: window.innerHeight,
 	parent: "game",
+	type: Phaser.AUTO,
 	fps: {
 		min: 5,
 		target: 60

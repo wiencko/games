@@ -10,9 +10,6 @@ module.exports = {
       }
     ]
 	},
-	devServer: {
-		//hot: false
-	},
   resolve: {
     extensions: [ '.ts', '.tsx', '.js' ]
   },

@@ -7,6 +7,7 @@ export class GameScene extends Phaser.Scene {
 	fallenLimit: number;
 	sand: Phaser.Physics.Arcade.StaticGroup;
 	info: Phaser.GameObjects.Text;
+	canvas: HTMLCanvasElement;
 	constructor() {
 		super({
 			key: "GameScene"
@@ -29,16 +30,17 @@ export class GameScene extends Phaser.Scene {
 	}
 	hi: Phaser.Types.GameObjects.Group.GroupCreateConfig;
 	create(): void {
+		this.canvas = this.sys.game.canvas;
 		this.sand = this.physics.add.staticGroup({
 			key: 'sand',
-			frameQuantity: 20
+			frameQuantity: this.canvas.width/40
 		});
 		
 		Phaser.Actions.PlaceOnLine(this.sand.getChildren(),
-			new Phaser.Geom.Line(20, 580, 820, 580));
+			new Phaser.Geom.Line(20, this.canvas.height-20, this.canvas.width+20, this.canvas.height-20));
 		this.sand.refresh();
 		this.info = this.add.text(10, 10, '',
-			{ font: '24px Arial Bold', fill: '#FBFBAC' });
+			{ font: '24px Arial Bold', fill: '#D3D3D3' });
 	}
 	update(time: number): void {
 		var diff: number = time - this.lastStarTime;
@@ -82,7 +84,7 @@ export class GameScene extends Phaser.Scene {
 	}
 	private emitStar(): void {
 		var star: Phaser.Physics.Arcade.Image;
-		var x = Phaser.Math.Between(25, 775);
+		var x = Phaser.Math.Between(25, this.canvas.width-25);
 		var y = 26;
 		star = this.physics.add.image(x, y, "star");
 		star.setDisplaySize(50, 50);
