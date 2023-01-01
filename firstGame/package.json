@@ -17,10 +17,10 @@
   "devDependencies": {
     "@types/activex-excel": "^14.0.5",
     "live-server": "^1.2.1",
-    "phaser": "^3.20.1",
-    "ts-loader": "^6.2.1",
+    "phaser": "^3.55.2",
+    "ts-loader": "^9.4.2",
     "typescript": "^3.7.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
